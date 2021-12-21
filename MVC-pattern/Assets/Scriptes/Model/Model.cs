@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,21 @@ public class Model : MonoBehaviour
     private List<CubeFigure> cubes = new List<CubeFigure>();
     private List<SphereFigure> spheres = new List<SphereFigure>();
 
+    public Action<int> OnCubesCountChange;
+    public Action<int> OnSpheresCountChange;
+
+    private void Start()
+    {
+        OnCubesCountChange?.Invoke(cubes.Count);
+        OnSpheresCountChange?.Invoke(spheres.Count);
+    }
     public void CreateCube(Vector3 position)
     {
         GameObject cubeInst = Instantiate(cube.gameObject);
         cubeInst.transform.position = position;
         CubeFigure cubeFigure = cubeInst.GetComponent<CubeFigure>();
         cubes.Add(cubeFigure);
+        OnCubesCountChange?.Invoke(cubes.Count);
     }
     public void CreateSphere(Vector3 position)
     {
@@ -23,6 +33,7 @@ public class Model : MonoBehaviour
         sphereInst.transform.position = position;
         SphereFigure sphereFigure = sphereInst.GetComponent<SphereFigure>();
         spheres.Add(sphereFigure);
+        OnSpheresCountChange?.Invoke(spheres.Count);
     }
     public int CubesCount()
     {

@@ -8,33 +8,41 @@ public class Presenter : MonoBehaviour
     [SerializeField] private Model model;
     [SerializeField] private View view;
 
-    private void Start()
+    private void OnEnable()
     {
-        ChangeViewCubeCount();
-        ChangeViewSphereCount();
+        model.OnCubesCountChange += ChangeViewCubeCount;
+        model.OnSpheresCountChange += ChangeViewSphereCount;
+    }
+    private void OnDisable()
+    {
+        model.OnCubesCountChange -= ChangeViewCubeCount;
+        model.OnSpheresCountChange -= ChangeViewSphereCount;
     }
     public void CreateCube()
     {
         model.CreateCube(positions[Random.Range(0, positions.Length)]);
-        ChangeViewCubeCount();
     }
+
     public void CreateSphere()
     {
         model.CreateSphere(positions[Random.Range(0, positions.Length)]);
-        ChangeViewSphereCount();
     }
-    public void ChangeViewCubeCount()
+
+    public void ChangeViewCubeCount(int count)
     {
-        view.ChangeCubeView(model.CubesCount());
+        view.ChangeCubeView(count);
     }
-    public void ChangeViewSphereCount()
+
+    public void ChangeViewSphereCount(int count)
     {
-        view.ChangeSphereView(model.SpheresCount());
+        view.ChangeSphereView(count);
     }
+
     public void DestroyCube()
     {
 
     }
+
     public void DestroySphere()
     {
 
