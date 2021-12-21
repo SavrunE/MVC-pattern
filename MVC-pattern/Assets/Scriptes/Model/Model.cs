@@ -49,6 +49,7 @@ public class Model : MonoBehaviour
         {
             cubes.Remove(cube);
             Destroy(cube.GetComponent<Rigidbody>());
+            OnCubesCountChange?.Invoke(cubes.Count);
         }
     }
     public void DestroyCube(SphereFigure sphere)
@@ -57,6 +58,7 @@ public class Model : MonoBehaviour
         {
             spheres.Remove(sphere);
             Destroy(sphere.GetComponent<Rigidbody>());
+            OnSpheresCountChange?.Invoke(spheres.Count);
         }
     }
 }
